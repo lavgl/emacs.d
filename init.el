@@ -92,7 +92,7 @@
 
 (use-package vertico
   ;; TODO: why it's in init, not in config?
-  :init (vertico-modqe))
+  :init (vertico-mode))
 
 (use-package orderless
   :ensure t
