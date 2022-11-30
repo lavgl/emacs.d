@@ -195,6 +195,7 @@
 (use-package clojure-mode
   ;; TODO: don't forget about me :)
   ;; :hook (clojure-mode . avg/init-clojure-mode)
+  :defer t
   :config
   (general-define-key
    :keymaps '(clojure-mode-map)
@@ -214,6 +215,7 @@
 ;; (prog-mode cider-repl-mode)
 
 (use-package cider
+  :defer t
   :config
   (general-define-key
    :keymaps '(clojure-mode-map)
@@ -235,7 +237,8 @@
   (add-hook 'cider-repl-mode-hook #'turn-on-smartparens-strict-mode))
 
 
-(use-package flycheck-clj-kondo)
+(use-package flycheck-clj-kondo
+  :defer t)
 
 
 ;; TODO: verify that I really want this
