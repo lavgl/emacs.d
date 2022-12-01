@@ -59,6 +59,7 @@
 
 (load-theme 'modus-vivendi)
 
+(use-package diminish)
 
 ;; improving help system
 
@@ -69,23 +70,17 @@
            ("C-c C-d" . 'helpful-at-point)))
 
 (use-package which-key
+  :diminish
   :config (which-key-mode))
 
 (use-package guru-mode
+  :diminish
   :config (guru-global-mode))
 
 (use-package command-log-mode
   :init
   (setq command-log-mode-is-global t
 	command-log-mode-open-log-turns-on-mode t))
-
-
-;; easy init file access
-
-(use-package crux
-  :init
-  (setq user-init-file "~/.emacs.noevil/init.el")
-  :bind (("C-c I" . crux-find-user-init-file)))
 
 
 ;; completion setup
@@ -95,7 +90,6 @@
   :init (vertico-mode))
 
 (use-package orderless
-  :ensure t
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
