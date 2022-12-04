@@ -5,6 +5,6 @@ auto-save-list/
 .lsp-session-v1
 projectile.cache
 projectile-bookmarks.eld
-recentf
 **/*#
 **/*~
+var/savehist.el

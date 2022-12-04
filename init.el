@@ -55,6 +55,7 @@
 
 (set-face-attribute 'default nil :font "Source Code Pro" :height 160)
 
+;; fullscreen frame on startup
 (add-to-list 'default-frame-alist '(fullscreen . fullboth))
 
 (load-theme 'modus-vivendi)
@@ -64,10 +65,10 @@
 ;; improving help system
 
 (use-package helpful
-    :bind (("C-h f" . 'helpful-callable)
-           ("C-h v" . 'helpful-variable)
-           ("C-h k" . 'helpful-key)
-           ("C-c C-d" . 'helpful-at-point)))
+  :bind (("C-h f" . 'helpful-callable)
+         ("C-h v" . 'helpful-variable)
+         ("C-h k" . 'helpful-key)
+         ("C-c C-d" . 'helpful-at-point)))
 
 (use-package which-key
   :diminish
@@ -82,7 +83,6 @@
   (setq command-log-mode-is-global t
 	command-log-mode-open-log-turns-on-mode t))
 
-
 ;; completion setup
 
 (use-package vertico
@@ -93,6 +93,11 @@
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
+
+;; NOTE: persists history over emacs restart
+(use-package savehist
+  :init
+  (savehist-mode))
 
 ;; init lisp support
 
