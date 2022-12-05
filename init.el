@@ -1,28 +1,29 @@
 ;; package management setup
 
-(require 'package)
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 6))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/radian-software/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
 
-(add-to-list 'package-archives
-	     '("melpa" . "https://melpa.org/packages/"))
+(setq straight-use-package-by-default t)
 
-(package-initialize)
+(straight-use-package 'use-package)
 
-(unless (package-installed-p 'use-package)
-  (package-install 'use-package)
-  (package-refresh-contents))
-
-(require 'use-package)
-
-(setq use-package-always-ensure t
-      use-package-compute-statistics t
+(setq use-package-compute-statistics t
       use-package-verbose t)
-
 
 ;; no-littering setup
 ;; trying to not pollute my .emacs.d
 
-(unless (package-installed-p 'no-littering)
-  (package-install 'no-littering))
+(straight-use-package 'no-littering)
 
 (require 'no-littering)
 
@@ -62,6 +63,8 @@
 
 (use-package diminish)
 
+(use-package ace-window)
+
 ;; improving help system
 
 (use-package helpful
@@ -69,6 +72,8 @@
          ("C-h v" . 'helpful-variable)
          ("C-h k" . 'helpful-key)
          ("C-c C-d" . 'helpful-at-point)))
+
+(use-package info+)
 
 (use-package which-key
   :diminish

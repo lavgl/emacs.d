@@ -1,5 +1,6 @@
 eshell/
 elpa/
+straight/
 recentf
 auto-save-list/
 .lsp-session-v1
@@ -7,4 +8,6 @@ projectile.cache
 projectile-bookmarks.eld
 **/*#
 **/*~
+**/.#*
 var/savehist.el
+etc/custom.el
