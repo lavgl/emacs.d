@@ -39,8 +39,7 @@
  ;; it's hard for me to track C-v/M-v with default 2 lines
  next-screen-context-lines 8
  ;; I don't like noises
- ring-bell-function 'ignore
- display-line-numbers-type 'relative)
+ ring-bell-function 'ignore)
 
  ;; I don't like trailing whitespace, so I prefer to see and remove them
 (setq-default show-trailing-whitespace t)
@@ -56,6 +55,13 @@
 
 (set-face-attribute 'default nil :font "Source Code Pro" :height 160)
 
+;; golden ratio
+(use-package zoom
+    :custom
+    (zoom-size '(0.618 . 0.618))
+    :config
+    (zoom-mode 1))
+
 ;; fullscreen frame on startup
 (add-to-list 'default-frame-alist '(fullscreen . fullboth))
 
@@ -63,7 +69,12 @@
 
 (use-package diminish)
 
-(use-package ace-window)
+(use-package winum
+  :init (winum-mode)
+  :bind (("M-1" . 'winum-select-window-1)
+	 ("M-2" . 'winum-select-window-2)
+	 ("M-3" . 'winum-select-window-3)
+	 ("M-4" . 'winum-select-window-4)))
 
 ;; improving help system
 
@@ -123,4 +134,3 @@
 
 (use-package highlight-indentation
   :hook (yaml-mode . highlight-indentation-current-column-mode))
-
