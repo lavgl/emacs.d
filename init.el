@@ -124,7 +124,7 @@
   (setq command-log-mode-is-global t
 	command-log-mode-open-log-turns-on-mode t))
 
-;; completion setup
+;; completion & search setup
 
 (use-package vertico
   ;; TODO: why it's in init, not in config?
@@ -139,6 +139,10 @@
 (use-package savehist
   :init
   (savehist-mode))
+
+(use-package ctrlf
+  :init
+  (ctrlf-mode))
 
 ;; init lisp support
 
