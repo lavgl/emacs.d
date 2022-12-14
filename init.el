@@ -43,7 +43,10 @@
  display-line-numbers-type 'relative)
 
  ;; I don't like trailing whitespace, so I prefer to see and remove them
-(setq-default show-trailing-whitespace t)
+(setq-default
+ show-trailing-whitespace t
+ indent-tabs-mode nil
+ tab-width 4)
 
 (global-display-line-numbers-mode)
 (tool-bar-mode -1)
@@ -63,21 +66,32 @@
     :config
     (zoom-mode 1))
 
-;; (use-package winum
-;;   :init (winum-mode)
-;;   :bind (("M-1" . 'winum-select-window-1)
-;; 	 ("M-2" . 'winum-select-window-2)
-;; 	 ("M-3" . 'winum-select-window-3)
-;; 	 ("M-4" . 'winum-select-window-4)))
+;; window management
+;;
+;; I have considered:
+;; 1. other-window
+;; 2. ace-window
+;; 3. bindings from the Xah Lee blogpost (xahlee.info/emacs/emacs/effective_emacs.html)
+;; 4. finally, winum-mode, which I have been using in spacemacs
+;;
+;; With the default 'other-window command, I'm too tired to switch between windows,
+;; if there is more than two windows.
+;; I have at least two windows with vertical split usually, and I'm often switching between them.
+;; So, I prefer to optimize window switching, not window splitting/killing
+;; (that's the reason, why Xah Lee's Meta bindings don't work for me as well).
+;;
+;; winum-mode works great for this purpose.
+;; ace-window looks interesting, but in practice, the default number-based window keys
+;; are far away from the home row and uncomfortable,
+;; and customizing 'aw-keys to the home row requires adaptation,
+;; which seems unneccesary, as I already could just switch to winum
 
-(use-package ace-window
-  :custom
-  (aw-keys '(?s ?d ?f ?g ?a))
-  :bind (("M-s" . 'ace-window)
-         ("M-1" . 'delete-other-windows)
-	 ("M-2" . 'split-window-below)
-	 ("M-3" . 'split-window-right)
-	 ("M-4" . 'delete-window)))
+(use-package winum
+  :init (winum-mode)
+  :bind (("M-1" . 'winum-select-window-1)
+         ("M-2" . 'winum-select-window-2)
+         ("M-3" . 'winum-select-window-3)
+         ("M-4" . 'winum-select-window-4)))
 
 ;; fullscreen frame on startup
 (add-to-list 'default-frame-alist '(fullscreen . fullboth))
@@ -88,6 +102,7 @@
 
 ;; improving help system
 
+;; TODO: make helpful and info+ packages lazy?
 (use-package helpful
   :bind (("C-h f" . 'helpful-callable)
          ("C-h v" . 'helpful-variable)
