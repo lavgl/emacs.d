@@ -106,12 +106,14 @@
 
 ;; TODO: make helpful and info+ packages lazy?
 (use-package helpful
+  :defer t
   :bind (("C-h f" . 'helpful-callable)
          ("C-h v" . 'helpful-variable)
          ("C-h k" . 'helpful-key)
          ("C-c C-d" . 'helpful-at-point)))
 
-(use-package info+)
+(use-package info+
+  :defer t)
 
 (use-package which-key
   :diminish
@@ -147,6 +149,12 @@
 (use-package ctrlf
   :init
   (ctrlf-mode))
+
+;;
+
+(use-package hl-todo
+  :config
+  (global-hl-todo-mode))
 
 ;; init lisp support
 
