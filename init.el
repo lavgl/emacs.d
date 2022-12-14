@@ -124,18 +124,20 @@
 (use-package command-log-mode
   :init
   (setq command-log-mode-is-global t
-	command-log-mode-open-log-turns-on-mode t))
+        command-log-mode-open-log-turns-on-mode t))
 
 ;; completion & search setup
 
 (use-package vertico
-  ;; TODO: why it's in init, not in config?
   :init (vertico-mode))
 
 (use-package orderless
   :custom
   (completion-styles '(orderless basic))
   (completion-category-overrides '((file (styles basic partial-completion)))))
+
+(use-package marginalia
+  :init (marginalia-mode))
 
 ;; NOTE: persists history over emacs restart
 (use-package savehist
