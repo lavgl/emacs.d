@@ -59,6 +59,15 @@
 
 (set-face-attribute 'default nil :font "Source Code Pro" :height 160)
 
+(load-theme 'modus-vivendi)
+
+(use-package diminish)
+
+;; window management
+
+;; fullscreen frame on startup
+(add-to-list 'default-frame-alist '(fullscreen . fullboth))
+
 ;; golden ratio
 (use-package zoom
     :custom
@@ -66,7 +75,7 @@
     :config
     (zoom-mode 1))
 
-;; window management
+;; window keybindings
 ;;
 ;; I have considered:
 ;; 1. other-window
@@ -92,13 +101,6 @@
          ("M-2" . 'winum-select-window-2)
          ("M-3" . 'winum-select-window-3)
          ("M-4" . 'winum-select-window-4)))
-
-;; fullscreen frame on startup
-(add-to-list 'default-frame-alist '(fullscreen . fullboth))
-
-(load-theme 'modus-vivendi)
-
-(use-package diminish)
 
 ;; improving help system
 
