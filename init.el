@@ -39,8 +39,7 @@
  ;; it's hard for me to track C-v/M-v with default 2 lines
  next-screen-context-lines 8
  ;; I don't like noises
- ring-bell-function 'ignore
- display-line-numbers-type 'relative)
+ ring-bell-function 'ignore)
 
  ;; I don't like trailing whitespace, so I prefer to see and remove them
 (setq-default
@@ -140,6 +139,11 @@
 
 (use-package marginalia
   :init (marginalia-mode))
+
+;; TODO: bind 'recentf-open-fles to the key?
+(use-package recentf
+  :init
+  (recentf-mode))
 
 ;; NOTE: persists history over emacs restart
 (use-package savehist

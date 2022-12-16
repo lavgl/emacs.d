@@ -9,5 +9,5 @@ projectile-bookmarks.eld
 **/*#
 **/*~
 **/.#*
-var/savehist.el
-etc/custom.el
+var/*
+etc/*
