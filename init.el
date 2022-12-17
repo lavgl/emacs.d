@@ -39,7 +39,9 @@
  ;; it's hard for me to track C-v/M-v with default 2 lines
  next-screen-context-lines 8
  ;; I don't like noises
- ring-bell-function 'ignore)
+ ring-bell-function 'ignore
+ ;; don't ask if I go to git symlink in, for example, third-party elisp source code file
+ vc-follow-symlinks t)
 
  ;; I don't like trailing whitespace, so I prefer to see and remove them
 (setq-default
@@ -69,10 +71,10 @@
 
 ;; golden ratio
 (use-package zoom
-    :custom
-    (zoom-size '(0.618 . 0.618))
-    :config
-    (zoom-mode 1))
+  :custom
+  (zoom-size '(0.618 . 0.618))
+  :config
+  (zoom-mode 1))
 
 ;; window keybindings
 ;;
@@ -130,7 +132,8 @@
 ;; completion & search setup
 
 (use-package vertico
-  :init (vertico-mode))
+  :init (vertico-mode)
+  :custom (vertico-cycle t))
 
 (use-package orderless
   :custom
@@ -138,14 +141,17 @@
   (completion-category-overrides '((file (styles basic partial-completion)))))
 
 (use-package marginalia
-  :init (marginalia-mode))
+  :after vertico
+  :init (marginalia-mode)
+  :bind (:map minibuffer-local-map
+              ("M-A" . marginalia-cycle)))
 
 ;; TODO: bind 'recentf-open-fles to the key?
 (use-package recentf
   :init
   (recentf-mode))
 
-;; NOTE: persists history over emacs restart
+;; NOTE: persists minibuffer history over emacs restarts
 (use-package savehist
   :init
   (savehist-mode))
