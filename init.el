@@ -208,7 +208,12 @@
               ("s-p" . projectile-command-map)
               ("C-c p" . projectile-command-map)))
 
-;;
+(use-package dumb-jump
+  :init
+  (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
+
+
+;; misc
 
 (use-package hl-todo
   :config
