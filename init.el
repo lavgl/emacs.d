@@ -103,9 +103,8 @@
          ("M-3" . 'winum-select-window-3)
          ("M-4" . 'winum-select-window-4)))
 
-;; improving help system
+;; improving help & discoverability
 
-;; TODO: make helpful and info+ packages lazy?
 (use-package helpful
   :defer t
   :bind (("C-h f" . 'helpful-callable)
@@ -129,7 +128,15 @@
   (setq command-log-mode-is-global t
         command-log-mode-open-log-turns-on-mode t))
 
-;; completion & search setup
+(use-package keyfreq
+  :init
+  (keyfreq-mode)
+  (keyfreq-autosave-mode)
+  :config
+  (setq keyfreq-excluded-commands
+        '(self-insert-command)))
+
+
 
 (use-package vertico
   :init (vertico-mode)
