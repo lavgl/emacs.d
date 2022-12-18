@@ -137,6 +137,7 @@
         '(self-insert-command)))
 
 
+;; completion setup
 
 (use-package vertico
   :init (vertico-mode)
@@ -163,12 +164,44 @@
   :init
   (savehist-mode))
 
+(use-package emacs
+  :custom
+  ;; Enable indentation+completion using the TAB key.
+  ;; `completion-at-point' is often bound to M-TAB.
+  (tab-always-indent 'complete)
+
+  ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
+  ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
+  (read-extended-command-predicate
+   #'command-completion-default-include-p)
+
+  (completion-cycle-threshold 3))
+
+
+(use-package corfu
+  :straight (corfu :files (:defaults "extensions/*")
+                   :includes (corfu-popupinfo
+                              corfu-history-mode))
+  :custom
+  (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
+  (corfu-auto t)                 ;; Enable auto completion
+  (corfu-preview-current nil)    ;; Disable current candidate preview
+
+  :init
+  (global-corfu-mode)
+  (corfu-popupinfo-mode)
+  (corfu-history-mode))
+
+
+;; search & navigation
+
 (use-package ctrlf
   :init
   (ctrlf-mode))
 
 
 (use-package projectile
+  :defer t
   :init
   (projectile-mode)
   :bind (:map projectile-mode-map
