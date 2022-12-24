@@ -170,10 +170,10 @@
   ;; `completion-at-point' is often bound to M-TAB.
   (tab-always-indent 'complete)
 
-  ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
-  ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
-  (read-extended-command-predicate
-   #'command-completion-default-include-p)
+  ;; ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
+  ;; ;; Corfu commands are hidden, since they are not supposed to be used via M-x.
+  ;; (read-extended-command-predicate
+  ;;  #'command-completion-default-include-p)
 
   (completion-cycle-threshold 3))
 
@@ -219,13 +219,35 @@
   :config
   (global-hl-todo-mode))
 
-;; init lisp support
+;; paints parentheses surrounding the cursor in shades of red
+(use-package highlight-parentheses
+  :diminish
+  :init (global-highlight-parentheses-mode))
+
+;; lisp support
 
 (use-package smartparens
   :hook (prog-mode . turn-on-smartparens-strict-mode)
   :config
   (require 'smartparens-config))
 
+;; make parentheses less visible in Lisp code by dimming them
+(use-package paren-face
+  :diminish
+  :config
+  (global-paren-face-mode))
+
+;; clojure
+
+(use-package clojure-mode)
+
+
+;; TODO:
+;; enable smartparens mode in repl
+(use-package cider)
+
+(use-package aggressive-indent-mode
+  :hook clojure-mode)
 
 ;; init yaml / ansible support
 
