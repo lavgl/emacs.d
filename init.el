@@ -38,6 +38,8 @@
  inhibit-startup-screen t
  ;; it's hard for me to track C-v/M-v with default 2 lines
  next-screen-context-lines 8
+ ;; nicer C-v, M-v behaviour
+ scroll-preserve-screen-position t
  ;; I don't like noises
  ring-bell-function 'ignore
  ;; don't ask if I go to git symlink in, for example, third-party elisp source code file
@@ -212,6 +214,10 @@
   :init
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
+;; NOTE: derived from http://www.wilfred.me.uk/.emacs.d/init.html
+(use-package highlight-symbol
+  :bind (("M-n" . highlight-symbol-next)
+         ("M-p" . highlight-symbol-prev)))
 
 ;; misc
 
@@ -219,12 +225,16 @@
   :config
   (global-hl-todo-mode))
 
+(use-package crux
+  ;; NOTE: derived from http://www.wilfred.me.uk/.emacs.d/init.html
+  :bind (([remap move-beginning-of-line] . #'crux-move-beginning-of-line)))
+
+;; listp support
+
 ;; paints parentheses surrounding the cursor in shades of red
 (use-package highlight-parentheses
   :diminish
   :init (global-highlight-parentheses-mode))
-
-;; lisp support
 
 (use-package smartparens
   :hook (prog-mode . turn-on-smartparens-strict-mode)
