@@ -97,13 +97,21 @@
 ;; are far away from the home row and uncomfortable,
 ;; and customizing 'aw-keys to the home row requires adaptation,
 ;; which seems unneccesary, as I already could just switch to winum
-
 (use-package winum
   :init (winum-mode)
   :bind (("M-1" . 'winum-select-window-1)
          ("M-2" . 'winum-select-window-2)
          ("M-3" . 'winum-select-window-3)
          ("M-4" . 'winum-select-window-4)))
+
+(use-package popper
+  :bind
+  (("C-`" . popper-toggle-latest))
+  :custom
+  (popper-group-function popper-group-by-directory)
+  :init
+  (popper-mode)
+  (popper-echo-mode))
 
 ;; improving help & discoverability
 
@@ -137,7 +145,6 @@
   :config
   (setq keyfreq-excluded-commands
         '(self-insert-command)))
-
 
 ;; completion setup
 
@@ -219,6 +226,9 @@
   :bind (("M-n" . highlight-symbol-next)
          ("M-p" . highlight-symbol-prev)))
 
+(use-package avy
+  :bind (("C-;" . avy-goto-word-1)))
+
 ;; misc
 
 (use-package hl-todo
@@ -226,8 +236,8 @@
   (global-hl-todo-mode))
 
 (use-package crux
-  ;; NOTE: derived from http://www.wilfred.me.uk/.emacs.d/init.html
-  :bind (([remap move-beginning-of-line] . #'crux-move-beginning-of-line)))
+  :bind ((("C-a" . crux-move-beginning-of-line))
+         (("C-<tab>" . crux-switch-to-previous-buffer))))
 
 ;; listp support
 
@@ -247,9 +257,18 @@
   :config
   (global-paren-face-mode))
 
+
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
 ;; clojure
 
-(use-package clojure-mode)
+(use-package clojure-mode
+  :bind (:map clojure-mode-map
+         ("C-<return>" . cider-eval-defun-at-point))
+  :config
+  (require 'flycheck-clj-kondo))
 
 
 ;; TODO:
@@ -258,6 +277,8 @@
 
 (use-package aggressive-indent-mode
   :hook clojure-mode)
+
+(use-package flycheck-clj-kondo)
 
 ;; init yaml / ansible support
 
