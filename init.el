@@ -66,6 +66,11 @@
 
 (use-package diminish)
 
+;;
+
+(use-package use-package-chords
+  :config (key-chord-mode))
+
 ;; window management
 
 ;; fullscreen frame on startup
@@ -108,7 +113,7 @@
   :bind
   (("C-`" . popper-toggle-latest))
   :custom
-  (popper-group-function popper-group-by-directory)
+  (popper-group-function #'popper-group-by-directory)
   :init
   (popper-mode)
   (popper-echo-mode))
@@ -124,6 +129,10 @@
 
 (use-package info+
   :defer t)
+
+(use-package ace-link
+  :config
+  (ace-link-setup-default))
 
 (use-package which-key
   :diminish
@@ -218,6 +227,7 @@
               ("C-c p" . projectile-command-map)))
 
 (use-package dumb-jump
+  :chords (("gd" . xref-find-definitions))
   :init
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
@@ -227,6 +237,7 @@
          ("M-p" . highlight-symbol-prev)))
 
 (use-package avy
+  :chords (("jj" . avy-goto-word-1))
   :bind (("C-;" . avy-goto-word-1)))
 
 ;; misc
@@ -239,7 +250,11 @@
   :bind ((("C-a" . crux-move-beginning-of-line))
          (("C-<tab>" . crux-switch-to-previous-buffer))))
 
-;; listp support
+;; elisp support
+
+(use-package emacs
+  :bind (:map emacs-lisp-mode-map
+              ("C-<return>" . eval-defun)))
 
 ;; paints parentheses surrounding the cursor in shades of red
 (use-package highlight-parentheses
@@ -266,9 +281,7 @@
 
 (use-package clojure-mode
   :bind (:map clojure-mode-map
-         ("C-<return>" . cider-eval-defun-at-point))
-  :config
-  (require 'flycheck-clj-kondo))
+              ("C-<return>" . cider-eval-defun-at-point)))
 
 
 ;; TODO:
@@ -278,7 +291,8 @@
 (use-package aggressive-indent-mode
   :hook clojure-mode)
 
-(use-package flycheck-clj-kondo)
+(use-package flycheck-clj-kondo
+  :after (flycheck clojure-mode))
 
 ;; init yaml / ansible support
 
