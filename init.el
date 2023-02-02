@@ -71,6 +71,11 @@
 (use-package use-package-chords
   :config (key-chord-mode))
 
+
+(use-package undo-fu
+  :bind (("C-/" . undo-fu-only-undo)
+         ("C-M-/" . undo-fu-only-redo)))
+
 ;; window management
 
 ;; fullscreen frame on startup
@@ -126,6 +131,10 @@
          ("C-h v" . 'helpful-variable)
          ("C-h k" . 'helpful-key)
          ("C-c C-d" . 'helpful-at-point)))
+
+(use-package elisp-demos
+  :config
+  (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update))
 
 (use-package info+
   :defer t)
@@ -204,6 +213,7 @@
   (corfu-cycle t)                ;; Enable cycling for `corfu-next/previous'
   (corfu-auto t)                 ;; Enable auto completion
   (corfu-preview-current nil)    ;; Disable current candidate preview
+  (corfu-auto-delay 0)
 
   :init
   (global-corfu-mode)
@@ -237,7 +247,8 @@
          ("M-p" . highlight-symbol-prev)))
 
 (use-package avy
-  :chords (("jj" . avy-goto-word-1))
+  :chords (("jj" . avy-goto-word-1)
+           ("jl" . avy-goto-line))
   :bind (("C-;" . avy-goto-word-1)))
 
 ;; misc
@@ -255,6 +266,9 @@
 (use-package emacs
   :bind (:map emacs-lisp-mode-map
               ("C-<return>" . eval-defun)))
+;; :config
+;; (electric-pair-mode))
+
 
 ;; paints parentheses surrounding the cursor in shades of red
 (use-package highlight-parentheses
@@ -264,7 +278,18 @@
 (use-package smartparens
   :hook (prog-mode . turn-on-smartparens-strict-mode)
   :config
-  (require 'smartparens-config))
+  (require 'smartparens-config)
+  :bind (:map clojure-mode-map
+              ("C-d" . sp-kill-hybrid-sexp)))
+
+(use-package puni
+  :disabled)
+
+(use-package parinfer-rust-mode
+  :disabled
+  :hook (emacs-lisp-mode
+         clojure-mode))
+
 
 ;; make parentheses less visible in Lisp code by dimming them
 (use-package paren-face
@@ -289,10 +314,18 @@
 (use-package cider)
 
 (use-package aggressive-indent-mode
-  :hook clojure-mode)
+  :hook (emacs-lisp-mode clojure-mode))
 
 (use-package flycheck-clj-kondo
   :after (flycheck clojure-mode))
+
+(use-package kaocha-runner
+  :bind (:map clojure-mode-map
+              ("C-c k t" . kaocha-runner-run-test-at-point)
+              ("C-c k n" . kaocha-runner-run-tests)
+              ("C-c k a" . kaocha-runner-run-all-tests)
+              ("C-c k w" . kaocha-runner-show-warnings)
+              ("C-c k h" . kaocha-runner-hide-windows)))
 
 ;; init yaml / ansible support
 
