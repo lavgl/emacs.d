@@ -114,6 +114,7 @@
          ("M-3" . 'winum-select-window-3)
          ("M-4" . 'winum-select-window-4)))
 
+;; TODO: treat repl buffer as a popup
 (use-package popper
   :bind
   (("C-`" . popper-toggle-latest))
@@ -265,7 +266,9 @@
 
 (use-package emacs
   :bind (:map emacs-lisp-mode-map
-              ("C-<return>" . eval-defun)))
+              ("C-<return>" . eval-defun)
+              ;; mimicking cider here
+              ("C-c C-c" . eval-defun)))
 ;; :config
 ;; (electric-pair-mode))
 
@@ -278,9 +281,7 @@
 (use-package smartparens
   :hook (prog-mode . turn-on-smartparens-strict-mode)
   :config
-  (require 'smartparens-config)
-  :bind (:map clojure-mode-map
-              ("C-d" . sp-kill-hybrid-sexp)))
+  (require 'smartparens-config))
 
 (use-package puni
   :disabled)
@@ -304,16 +305,15 @@
 
 ;; clojure
 
-(use-package clojure-mode
-  :bind (:map clojure-mode-map
-              ("C-<return>" . cider-eval-defun-at-point)))
-
+;; TODO: add sexp highlighing on eval
+(use-package clojure-mode)
 
 ;; TODO:
 ;; enable smartparens mode in repl
 (use-package cider)
 
 (use-package aggressive-indent-mode
+  :disabled
   :hook (emacs-lisp-mode clojure-mode))
 
 (use-package flycheck-clj-kondo
@@ -338,3 +338,6 @@
 
 (use-package highlight-indentation
   :hook (yaml-mode . highlight-indentation-current-column-mode))
+
+;; TODO: remove trailing whitespaces on file save
+;; TODO: automatically refresh opened file content if file on disk changes
