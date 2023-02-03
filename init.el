@@ -252,6 +252,9 @@
            ("jl" . avy-goto-line))
   :bind (("C-;" . avy-goto-word-1)))
 
+(use-package emacs
+  :bind (("C-." . switch-to-buffer)))
+
 ;; misc
 
 (use-package hl-todo
