@@ -120,6 +120,9 @@
   (("C-`" . popper-toggle-latest))
   :custom
   (popper-group-function #'popper-group-by-directory)
+  (popper-reference-buffers '("^\\*Messages\\*"
+                              helpful-mode
+                              cider-repl-mode))
   :init
   (popper-mode)
   (popper-echo-mode))
