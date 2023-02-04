@@ -229,7 +229,9 @@
 
 (use-package ctrlf
   :init
-  (ctrlf-mode))
+  (ctrlf-mode)
+  :custom
+  (ctrlf-default-search-style 'fuzzy))
 
 
 (use-package projectile
