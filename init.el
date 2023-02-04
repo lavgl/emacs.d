@@ -265,6 +265,9 @@
   :bind ((("C-a" . crux-move-beginning-of-line))
          (("C-<tab>" . crux-switch-to-previous-buffer))))
 
+(use-package expand-region
+  :bind (("C-=" . er/expand-region)))
+
 ;; elisp support
 
 (use-package emacs
