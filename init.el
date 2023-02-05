@@ -185,6 +185,9 @@
   :bind (:map minibuffer-local-map
               ("M-A" . marginalia-cycle)))
 
+(use-package embark
+  :bind (("C-." . embark-act)))
+
 ;; TODO: bind 'recentf-open-fles to the key?
 (use-package recentf
   :init
@@ -254,11 +257,10 @@
 
 (use-package avy
   :chords (("jj" . avy-goto-word-1)
-           ("jl" . avy-goto-line))
-  :bind (("C-;" . avy-goto-word-1)))
+           ("jl" . avy-goto-line)))
 
 (use-package emacs
-  :bind (("C-." . switch-to-buffer)))
+  :bind (("C-'" . switch-to-buffer)))
 
 ;; misc
 
