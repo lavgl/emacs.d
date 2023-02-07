@@ -11,4 +11,4 @@ projectile-bookmarks.eld
 **/.#*
 var/*
 etc/*
-flycheck-init.el
+flycheck_init.el

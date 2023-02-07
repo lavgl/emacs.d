@@ -237,6 +237,7 @@
   (ctrlf-default-search-style 'fuzzy))
 
 
+;; TODO: try project.el
 (use-package projectile
   :defer t
   :init
@@ -323,6 +324,7 @@
 
 ;; TODO:
 ;; enable smartparens mode in repl
+;; ensure lazy loading
 (use-package cider)
 
 (use-package aggressive-indent-mode
