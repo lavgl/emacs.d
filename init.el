@@ -258,7 +258,7 @@
 
 (use-package avy
   :chords (("jj" . avy-goto-word-1)
-           ("jl" . avy-goto-line)))
+           ("ll" . avy-goto-line)))
 
 (use-package emacs
   :bind (("C-'" . switch-to-buffer)))
@@ -313,8 +313,8 @@
   (global-paren-face-mode))
 
 
+;; TODO: load lazily?
 (use-package flycheck
-  :ensure t
   :init (global-flycheck-mode))
 
 ;; clojure
@@ -324,8 +324,8 @@
 
 ;; TODO:
 ;; enable smartparens mode in repl
-;; ensure lazy loading
-(use-package cider)
+(use-package cider
+  :defer t)
 
 (use-package aggressive-indent-mode
   :disabled
@@ -356,3 +356,6 @@
 
 ;; TODO: remove trailing whitespaces on file save
 ;; TODO: automatically refresh opened file content if file on disk changes
+;; TODO: add project-wise grep
+;; TODO: get rid of all temp files in project folder!
+;; eg: .#build.clj
