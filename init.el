@@ -29,7 +29,8 @@
 
 (setq auto-save-file-name-transforms
       `((".*" ,(no-littering-expand-var-file-name "auto-save/") t))
-      custom-file (no-littering-expand-etc-file-name "custom.el"))
+      custom-file (no-littering-expand-etc-file-name "custom.el")
+      create-lockfiles nil)
 
 
 ;; some basic UI tweaks
@@ -357,5 +358,3 @@
 ;; TODO: remove trailing whitespaces on file save
 ;; TODO: automatically refresh opened file content if file on disk changes
 ;; TODO: add project-wise grep
-;; TODO: get rid of all temp files in project folder!
-;; eg: .#build.clj
