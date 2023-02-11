@@ -122,6 +122,8 @@
   :custom
   (popper-group-function #'popper-group-by-directory)
   (popper-reference-buffers '("^\\*Messages\\*"
+                              "^\\*Shell Command Output\\*"
+                              help-mode
                               helpful-mode
                               cider-repl-mode))
   :init
@@ -240,6 +242,7 @@
 
 ;; TODO: try project.el
 (use-package projectile
+  :disabled
   :defer t
   :init
   (projectile-mode)
@@ -253,16 +256,17 @@
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 ;; NOTE: derived from http://www.wilfred.me.uk/.emacs.d/init.html
+;; TODO: re-evaluate, do I need this?
 (use-package highlight-symbol
   :bind (("M-n" . highlight-symbol-next)
          ("M-p" . highlight-symbol-prev)))
 
 (use-package avy
-  :chords (("jj" . avy-goto-word-1)
-           ("ll" . avy-goto-line)))
+  :bind (("C-j" . avy-goto-word-1))
+  :chords (("ll" . avy-goto-line)))
 
 (use-package emacs
-  :bind (("C-'" . switch-to-buffer)))
+  :bind (("C-;" . switch-to-buffer)))
 
 ;; misc
 
@@ -316,6 +320,7 @@
 
 ;; TODO: load lazily?
 (use-package flycheck
+  :defer t
   :init (global-flycheck-mode))
 
 ;; clojure
