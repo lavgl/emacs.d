@@ -69,6 +69,7 @@
 
 ;;
 
+;; TODO: remove! it's quite laggysh and unreliable
 (use-package use-package-chords
   :config (key-chord-mode))
 
@@ -115,7 +116,9 @@
          ("M-3" . 'winum-select-window-3)
          ("M-4" . 'winum-select-window-4)))
 
-;; TODO: treat repl buffer as a popup
+;; TODO: add *xref* as a popup? after checking the video
+;; and *Warnings*
+;; and *Backtrace*
 (use-package popper
   :bind
   (("C-`" . popper-toggle-latest))
@@ -134,9 +137,9 @@
 
 (use-package helpful
   :defer t
-  :bind (("C-h f" . 'helpful-callable)
-         ("C-h v" . 'helpful-variable)
-         ("C-h k" . 'helpful-key)
+  :bind (("C-h f"   . 'helpful-callable)
+         ("C-h v"   . 'helpful-variable)
+         ("C-h k"   . 'helpful-key)
          ("C-c C-d" . 'helpful-at-point)))
 
 (use-package elisp-demos
@@ -146,6 +149,7 @@
 (use-package info+
   :defer t)
 
+;; TODO: do I use this?
 (use-package ace-link
   :config
   (ace-link-setup-default))
@@ -189,7 +193,7 @@
               ("M-A" . marginalia-cycle)))
 
 (use-package embark
-  :bind (("C-." . embark-act)))
+  :bind (("C- ." . embark-act)))
 
 ;; TODO: bind 'recentf-open-fles to the key?
 (use-package recentf
@@ -204,7 +208,7 @@
 (use-package emacs
   :custom
   ;; Enable indentation+completion using the TAB key.
-  ;; `completion-at-point' is often bound to M-TAB.
+  ;; `completion-at-point' is often bound to M-TAB .
   (tab-always-indent 'complete)
 
   ;; ;; Emacs 28: Hide commands in M-x which do not apply to the current mode.
@@ -240,18 +244,16 @@
   (ctrlf-default-search-style 'fuzzy))
 
 
-;; TODO: try project.el
+;; TODO: find out, how to set project root for project.el
+;; (just like .projectile)
 (use-package projectile
-  :disabled
   :defer t
   :init
   (projectile-mode)
   :bind (:map projectile-mode-map
-              ("s-p" . projectile-command-map)
               ("C-c p" . projectile-command-map)))
 
 (use-package dumb-jump
-  :chords (("gd" . xref-find-definitions))
   :init
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
@@ -262,11 +264,20 @@
          ("M-p" . highlight-symbol-prev)))
 
 (use-package avy
-  :bind (("C-j" . avy-goto-word-1))
+  :bind (("C-j"  . avy-goto-word-1))
   :chords (("ll" . avy-goto-line)))
 
+
+(defun vh/find-init-file ()
+  "Just opens init.el file.
+Handy for quick init.el access."
+  (interactive)
+  (find-file-existing (concat user-emacs-directory
+                              "init.el")))
+
 (use-package emacs
-  :bind (("C-;" . switch-to-buffer)))
+  :bind (("C-;" . switch-to-buffer)
+         ("C-c f i" . vh/find-init-file)))
 
 ;; misc
 
