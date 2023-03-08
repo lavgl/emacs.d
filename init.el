@@ -69,11 +69,6 @@
 
 ;;
 
-;; TODO: remove! it's quite laggysh and unreliable
-(use-package use-package-chords
-  :config (key-chord-mode))
-
-
 (use-package undo-fu
   :bind (("C-/" . undo-fu-only-undo)
          ("C-M-/" . undo-fu-only-redo)))
@@ -193,7 +188,12 @@
               ("M-A" . marginalia-cycle)))
 
 (use-package embark
-  :bind (("C- ." . embark-act)))
+  :bind (("C-," . embark-act)))
+
+(use-package consult
+  :bind (("C-." . consult-buffer)))
+
+(use-package embark-consult)
 
 ;; TODO: bind 'recentf-open-fles to the key?
 (use-package recentf
@@ -264,8 +264,7 @@
          ("M-p" . highlight-symbol-prev)))
 
 (use-package avy
-  :bind (("C-j"  . avy-goto-word-1))
-  :chords (("ll" . avy-goto-line)))
+  :bind (("C-j"  . avy-goto-word-1)))
 
 
 (defun vh/find-init-file ()
@@ -276,8 +275,7 @@ Handy for quick init.el access."
                               "init.el")))
 
 (use-package emacs
-  :bind (("C-;" . switch-to-buffer)
-         ("C-c f i" . vh/find-init-file)))
+  :bind (("C-c f i" . vh/find-init-file)))
 
 ;; misc
 
