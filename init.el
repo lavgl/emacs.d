@@ -58,6 +58,7 @@
 (tooltip-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
+(global-auto-revert-mode)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -123,6 +124,7 @@
                               "^\\*Shell Command Output\\*"
                               help-mode
                               helpful-mode
+                              ;; TODO: make cider repl window vertical, not horizontal
                               cider-repl-mode))
   :init
   (popper-mode)
@@ -143,11 +145,6 @@
 
 (use-package info+
   :defer t)
-
-;; TODO: do I use this?
-(use-package ace-link
-  :config
-  (ace-link-setup-default))
 
 (use-package which-key
   :diminish
@@ -191,7 +188,8 @@
   :bind (("C-," . embark-act)))
 
 (use-package consult
-  :bind (("C-." . consult-buffer)))
+  :bind (("C-." . consult-buffer)
+         ("C-c /" . consult-ripgrep)))
 
 (use-package embark-consult)
 
@@ -275,7 +273,8 @@ Handy for quick init.el access."
                               "init.el")))
 
 (use-package emacs
-  :bind (("C-c f i" . vh/find-init-file)))
+  :bind (("C-c f i" . vh/find-init-file)
+         ("C-x k" . kill-this-buffer)))
 
 ;; misc
 
@@ -297,8 +296,8 @@ Handy for quick init.el access."
               ("C-<return>" . eval-defun)
               ;; mimicking cider here
               ("C-c C-c" . eval-defun)))
-;; :config
-;; (electric-pair-mode))
+  ;; :config
+  ;; (electric-pair-mode))
 
 
 ;; paints parentheses surrounding the cursor in shades of red
@@ -307,18 +306,23 @@ Handy for quick init.el access."
   :init (global-highlight-parentheses-mode))
 
 (use-package smartparens
+  :disabled
   :hook (prog-mode . turn-on-smartparens-strict-mode)
   :config
-  (require 'smartparens-config))
+  (require 'smartparens-config)
+  :bind (("s-[" . sp-backward-slurp-sexp)
+         ("s-]" . sp-slurp-hybrid-sexp)
+         ("s-{" . sp-backward-barf-sexp)
+         ("s-}" . sp-forward-barf-sexp)
+         ("s-f" . sp-forward-sexp)
+         ("s-b" . sp-backward-sexp)))
 
 (use-package puni
   :disabled)
 
 (use-package parinfer-rust-mode
-  :disabled
   :hook (emacs-lisp-mode
          clojure-mode))
-
 
 ;; make parentheses less visible in Lisp code by dimming them
 (use-package paren-face
@@ -335,7 +339,9 @@ Handy for quick init.el access."
 ;; clojure
 
 ;; TODO: add sexp highlighing on eval
-(use-package clojure-mode)
+(use-package clojure-mode
+  :custom
+  (clojure-indent-style :always-indent))
 
 ;; TODO:
 ;; enable smartparens mode in repl

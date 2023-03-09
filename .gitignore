@@ -12,3 +12,4 @@ projectile-bookmarks.eld
 var/*
 etc/*
 flycheck_init.el
+parinfer-rust/
