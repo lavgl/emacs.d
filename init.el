@@ -33,6 +33,13 @@
       create-lockfiles nil)
 
 
+(use-package benchmark-init
+  :ensure t
+  :config
+  ;; To disable collection of benchmark data after init is done.
+  (add-hook 'after-init-hook 'benchmark-init/deactivate))
+
+
 ;; some basic UI tweaks
 
 (setq
@@ -195,13 +202,15 @@
               ("M-A" . marginalia-cycle)))
 
 (use-package embark
+  :defer t
   :bind (("C-," . embark-act)))
 
 (use-package consult
   :bind (("C-." . consult-buffer)
          ("C-c /" . consult-ripgrep)))
 
-(use-package embark-consult)
+(use-package embark-consult
+  :defer t)
 
 ;; TODO: bind 'recentf-open-fles to the key?
 (use-package recentf
@@ -246,14 +255,15 @@
 ;; search & navigation
 
 (use-package ctrlf
+  :defer t
   :init
   (ctrlf-mode)
   :custom
   (ctrlf-default-search-style 'fuzzy))
 
 
-;; TODO: find out, how to set project root for project.el
-;; (just like .projectile)
+;; TODO: load lazily?
+;; but then I probably shouldn't activate mode on init :)
 (use-package projectile
   :diminish
   :defer t
@@ -263,14 +273,9 @@
               ("C-c p" . projectile-command-map)))
 
 (use-package dumb-jump
+  :defer t
   :init
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
-
-;; NOTE: derived from http://www.wilfred.me.uk/.emacs.d/init.html
-;; TODO: re-evaluate, do I need this?
-(use-package highlight-symbol
-  :bind (("M-n" . highlight-symbol-next)
-         ("M-p" . highlight-symbol-prev)))
 
 (use-package avy
   :bind (("C-;"  . avy-goto-char-2)
@@ -356,7 +361,6 @@ Handy for quick init.el access."
   (global-paren-face-mode))
 
 
-;; TODO: load lazily?
 (use-package flycheck
   :diminish
   :defer t
