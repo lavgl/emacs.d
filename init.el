@@ -38,7 +38,7 @@
 (setq
  inhibit-startup-screen t
  ;; it's hard for me to track C-v/M-v with default 2 lines
- next-screen-context-lines 8
+ next-screen-context-lines 20
  ;; nicer C-v, M-v behaviour
  scroll-preserve-screen-position t
  ;; I don't like noises
@@ -68,11 +68,21 @@
 
 (use-package diminish)
 
-;;
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
+(use-package minions
+  :config (minions-mode 1))
+
+;; (use-package awesome-tray
+;;   :straight (:host github :repo "manateelazycat/awesome-tray")
+;;   :init
+;;   (awesome-tray-mode))
+
+;; (use-package god-mode)
 
 (use-package undo-fu
   :bind (("C-/" . undo-fu-only-undo)
-         ("C-M-/" . undo-fu-only-redo)))
+         ("M-/" . undo-fu-only-redo)))
 
 ;; window management
 
@@ -245,6 +255,7 @@
 ;; TODO: find out, how to set project root for project.el
 ;; (just like .projectile)
 (use-package projectile
+  :diminish
   :defer t
   :init
   (projectile-mode)
@@ -262,7 +273,8 @@
          ("M-p" . highlight-symbol-prev)))
 
 (use-package avy
-  :bind (("C-j"  . avy-goto-word-1)))
+  :bind (("C-;"  . avy-goto-char-2)
+         ("C-'" . avy-goto-line)))
 
 
 (defun vh/find-init-file ()
@@ -283,8 +295,8 @@ Handy for quick init.el access."
   (global-hl-todo-mode))
 
 (use-package crux
-  :bind ((("C-a" . crux-move-beginning-of-line))
-         (("C-<tab>" . crux-switch-to-previous-buffer))))
+  :bind ((("C-a" . crux-move-beginning-of-line))))
+         ;; (("C-<tab>" . crux-switch-to-previous-buffer))))
 
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
@@ -296,14 +308,13 @@ Handy for quick init.el access."
               ("C-<return>" . eval-defun)
               ;; mimicking cider here
               ("C-c C-c" . eval-defun)))
-  ;; :config
-  ;; (electric-pair-mode))
 
 
 ;; paints parentheses surrounding the cursor in shades of red
 (use-package highlight-parentheses
   :diminish
   :init (global-highlight-parentheses-mode))
+
 
 (use-package smartparens
   :disabled
@@ -318,9 +329,23 @@ Handy for quick init.el access."
          ("s-b" . sp-backward-sexp)))
 
 (use-package puni
-  :disabled)
+  :init
+  (puni-global-mode)
+  (electric-pair-mode)
+  :bind (("C-<backspace>" . puni-backward-kill-word)
+         ("s-b" . puni-backward-sexp)
+         ("s-f" . puni-forward-sexp)
+         ("s-a" . puni-beginning-of-sexp)
+         ("s-e" . puni-end-of-sexp)
+         ("s-n" . puni-syntactic-forward-punct)
+         ("s-p" . puni-syntactic-backward-punct)
+         ("s-]" . puni-slurp-forward)
+         ("s-}" . puni-barf-forward)
+         ("s-[" . puni-slurp-backward)
+         ("s-{" . puni-barf-backward)))
 
 (use-package parinfer-rust-mode
+  :disabled
   :hook (emacs-lisp-mode
          clojure-mode))
 
@@ -333,6 +358,7 @@ Handy for quick init.el access."
 
 ;; TODO: load lazily?
 (use-package flycheck
+  :diminish
   :defer t
   :init (global-flycheck-mode))
 
@@ -341,7 +367,30 @@ Handy for quick init.el access."
 ;; TODO: add sexp highlighing on eval
 (use-package clojure-mode
   :custom
-  (clojure-indent-style :always-indent))
+  (clojure-indent-style :always-indent)
+  (clojure-align-forms-automatically t)
+  ;; :config
+  ;; (define-clojure-indent
+  ;;   (->  0)
+  ;;   (->> 0)
+  ;;   (some-> 0)
+  ;;   (some->> 0)
+  ;;   (as-> 0)
+  ;;   (and 0)
+  ;;   (or  0)
+  ;;   (>   0)
+  ;;   (<   0)
+  ;;   (>=  0)
+  ;;   (<=  0)
+  ;;   (=   0)
+  ;;   (not= 0)
+  ;;   (+   0)
+  ;;   (-   0)
+  ;;   (*   0)
+  ;;   (/   0)
+  ;;   (mod 0)
+  ;;   (rem 0))
+  )
 
 ;; TODO:
 ;; enable smartparens mode in repl
