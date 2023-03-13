@@ -92,6 +92,9 @@
 (use-package easy-kill
   :bind (("M-w" . easy-kill)))
 
+(use-package comment-dwim-2
+  :bind (("M-;" . comment-dwim-2)))
+
 ;; window management
 
 ;; fullscreen frame on startup
