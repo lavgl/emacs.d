@@ -65,6 +65,8 @@
 (blink-cursor-mode -1)
 (global-auto-revert-mode)
 
+(add-hook 'before-save-hook 'whitespace-cleanup)
+
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (set-face-attribute 'default nil :font "Source Code Pro" :height 160)
@@ -73,17 +75,8 @@
 
 (use-package diminish)
 
-(add-hook 'before-save-hook 'whitespace-cleanup)
-
 (use-package minions
   :config (minions-mode 1))
-
-;; (use-package awesome-tray
-;;   :straight (:host github :repo "manateelazycat/awesome-tray")
-;;   :init
-;;   (awesome-tray-mode))
-
-;; (use-package god-mode)
 
 (use-package undo-fu
   :bind (("C-/" . undo-fu-only-undo)
@@ -138,18 +131,25 @@
 ;; and *Backtrace*
 (use-package popper
   :bind
-  (("C-`" . popper-toggle-latest))
+  (("C-`" . popper-toggle-latest)
+   ("M-`" . popper-cycle))
   :custom
   (popper-group-function #'popper-group-by-directory)
   (popper-reference-buffers '("^\\*Messages\\*"
                               "^\\*Shell Command Output\\*"
+                              "\\*Warnings\\*"
                               help-mode
                               helpful-mode
-                              ;; TODO: make cider repl window vertical, not horizontal
                               cider-repl-mode))
   :init
   (popper-mode)
-  (popper-echo-mode))
+  (popper-echo-mode)
+  :config
+  (add-to-list 'display-buffer-alist
+               '("\\*cider-repl"
+                 (display-buffer-in-side-window)
+                 (side . left)
+                 (window-width . 50))))
 
 ;; improving help & discoverability
 
@@ -282,7 +282,7 @@
   (add-hook 'xref-backend-functions #'dumb-jump-xref-activate))
 
 (use-package avy
-  :bind (("C-;"  . avy-goto-char-2)
+  :bind (("C-;" . avy-goto-char-2)
          ("C-'" . avy-goto-line)))
 
 
@@ -358,7 +358,7 @@ Handy for quick init.el access."
   :hook (emacs-lisp-mode
          clojure-mode))
 
-;; make parentheses less visible in Lisp code by dimming them
+;; makes parentheses less visible in Lisp code by dimming them
 (use-package paren-face
   :diminish
   :config
@@ -372,42 +372,32 @@ Handy for quick init.el access."
 
 ;; clojure
 
-;; TODO: add sexp highlighing on eval
 (use-package clojure-mode
+  :commands put-clojure-indent
   :custom
   (clojure-indent-style :always-indent)
   (clojure-align-forms-automatically t)
-  ;; :config
-  ;; (define-clojure-indent
-  ;;   (->  0)
-  ;;   (->> 0)
-  ;;   (some-> 0)
-  ;;   (some->> 0)
-  ;;   (as-> 0)
-  ;;   (and 0)
-  ;;   (or  0)
-  ;;   (>   0)
-  ;;   (<   0)
-  ;;   (>=  0)
-  ;;   (<=  0)
-  ;;   (=   0)
-  ;;   (not= 0)
-  ;;   (+   0)
-  ;;   (-   0)
-  ;;   (*   0)
-  ;;   (/   0)
-  ;;   (mod 0)
-  ;;   (rem 0))
-  )
+  :config
+  (put-clojure-indent '= 0)
+  (put-clojure-indent 'not= 0)
+  (put-clojure-indent '+ 0)
+  (put-clojure-indent '- 0)
+  (put-clojure-indent '* 0)
+  (put-clojure-indent '/ 0)
+  (put-clojure-indent '> 0)
+  (put-clojure-indent '< 0)
+  (put-clojure-indent '>= 0)
+  (put-clojure-indent '<= 0)
+  (put-clojure-indent '->  0)
+  (put-clojure-indent '->> 0)
+  (put-clojure-indent 'and 0)
+  (put-clojure-indent 'or  0)
+  (put-clojure-indent 'and* 0)
+  (put-clojure-indent 'or* 0)
+  (put-clojure-indent 'recur 0))
 
-;; TODO:
-;; enable smartparens mode in repl
 (use-package cider
   :defer t)
-
-(use-package aggressive-indent-mode
-  :disabled
-  :hook (emacs-lisp-mode clojure-mode))
 
 (use-package flycheck-clj-kondo
   :after (flycheck clojure-mode))
@@ -431,7 +421,3 @@ Handy for quick init.el access."
 
 (use-package highlight-indentation
   :hook (yaml-mode . highlight-indentation-current-column-mode))
-
-;; TODO: remove trailing whitespaces on file save
-;; TODO: automatically refresh opened file content if file on disk changes
-;; TODO: add project-wise grep
