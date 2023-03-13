@@ -53,9 +53,7 @@
  ;; don't ask if I go to git symlink in, for example, third-party elisp source code file
  vc-follow-symlinks t)
 
- ;; I don't like trailing whitespace, so I prefer to see and remove them
 (setq-default
- show-trailing-whitespace t
  indent-tabs-mode nil
  tab-width 4)
 
@@ -90,6 +88,9 @@
 (use-package undo-fu
   :bind (("C-/" . undo-fu-only-undo)
          ("M-/" . undo-fu-only-redo)))
+
+(use-package easy-kill
+  :bind (("M-w" . easy-kill)))
 
 ;; window management
 
