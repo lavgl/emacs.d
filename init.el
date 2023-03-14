@@ -164,8 +164,7 @@
   :config
   (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update))
 
-(use-package info+
-  :defer t)
+(use-package info+)
 
 (use-package which-key
   :diminish
@@ -297,6 +296,11 @@ Handy for quick init.el access."
   :bind (("C-c f i" . vh/find-init-file)
          ("C-x k" . kill-this-buffer)))
 
+;; git
+
+(use-package magit
+  :defer t)
+
 ;; misc
 
 (use-package hl-todo
@@ -351,7 +355,8 @@ Handy for quick init.el access."
          ("s-]" . puni-slurp-forward)
          ("s-}" . puni-barf-forward)
          ("s-[" . puni-slurp-backward)
-         ("s-{" . puni-barf-backward)))
+         ("s-{" . puni-barf-backward)
+         ("s-W" . puni-splice)))
 
 (use-package parinfer-rust-mode
   :disabled
