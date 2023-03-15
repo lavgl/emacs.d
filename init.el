@@ -164,8 +164,10 @@
   :config
   (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update))
 
-;; TODO: load lazily
-(use-package info+)
+;; NOTE: disabled because it's monkey-patching disallows to load it lazily?
+;; or I just need to figure our how to do it
+(use-package info+
+  :disabled)
 
 (use-package which-key
   :diminish
