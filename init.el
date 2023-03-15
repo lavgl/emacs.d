@@ -164,6 +164,7 @@
   :config
   (advice-add 'helpful-update :after #'elisp-demos-advice-helpful-update))
 
+;; TODO: load lazily
 (use-package info+)
 
 (use-package which-key
