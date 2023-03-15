@@ -345,10 +345,11 @@ Handy for quick init.el access."
          ("s-b" . sp-backward-sexp)))
 
 (use-package puni
-  :init
-  (puni-global-mode)
+  :hook prog-mode
+  :config
   (electric-pair-mode)
-  :bind (("C-<backspace>" . puni-backward-kill-word)
+  :bind (:map puni-mode-map
+         ("C-<backspace>" . puni-backward-kill-word)
          ("s-b" . puni-backward-sexp)
          ("s-f" . puni-forward-sexp)
          ("s-a" . puni-beginning-of-sexp)
@@ -359,7 +360,8 @@ Handy for quick init.el access."
          ("s-}" . puni-barf-forward)
          ("s-[" . puni-slurp-backward)
          ("s-{" . puni-barf-backward)
-         ("s-W" . puni-splice)))
+         ("s-W" . puni-splice)
+         ("s-r" . puni-raise)))
 
 (use-package parinfer-rust-mode
   :disabled
