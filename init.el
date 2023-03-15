@@ -119,12 +119,16 @@
 ;; are far away from the home row and uncomfortable,
 ;; and customizing 'aw-keys to the home row requires adaptation,
 ;; which seems unneccesary, as I already could just switch to winum
+;;
+;; and M-o I is very handy when I use magit, because it has its own bindings
+;; for M-*
 (use-package winum
   :init (winum-mode)
   :bind (("M-1" . 'winum-select-window-1)
          ("M-2" . 'winum-select-window-2)
          ("M-3" . 'winum-select-window-3)
-         ("M-4" . 'winum-select-window-4)))
+         ("M-4" . 'winum-select-window-4)
+         ("M-o" . other-window)))
 
 ;; TODO: add *xref* as a popup? after checking the video
 ;; and *Warnings*
