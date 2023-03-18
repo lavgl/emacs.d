@@ -34,7 +34,7 @@
 
 
 (use-package benchmark-init
-  :ensure t
+  :disabled
   :config
   ;; To disable collection of benchmark data after init is done.
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
@@ -88,6 +88,12 @@
 (use-package comment-dwim-2
   :bind (("M-;" . comment-dwim-2)))
 
+(use-package iedit)
+
+(use-package super-save
+  :config
+  (super-save-mode))
+
 ;; window management
 
 ;; fullscreen frame on startup
@@ -133,6 +139,7 @@
 ;; TODO: add *xref* as a popup? after checking the video
 ;; and *Warnings*
 ;; and *Backtrace*
+;; *kaocha-output*
 (use-package popper
   :bind
   (("C-`" . popper-toggle-latest)
@@ -144,7 +151,9 @@
                               "\\*Warnings\\*"
                               help-mode
                               helpful-mode
-                              cider-repl-mode))
+                              cider-repl-mode
+                              shell-mode
+                              eshell-mode))
   :init
   (popper-mode)
   (popper-echo-mode)
@@ -152,7 +161,7 @@
   (add-to-list 'display-buffer-alist
                '("\\*cider-repl"
                  (display-buffer-in-side-window)
-                 (side . left)
+                 (side . right)
                  (window-width . 50))))
 
 ;; improving help & discoverability
@@ -217,7 +226,7 @@
 
 (use-package consult
   :bind (("C-." . consult-buffer)
-         ("C-c /" . consult-ripgrep)))
+         ("C-c C-/" . consult-ripgrep)))
 
 (use-package embark-consult
   :defer t)
@@ -365,7 +374,9 @@ Handy for quick init.el access."
          ("s-[" . puni-slurp-backward)
          ("s-{" . puni-barf-backward)
          ("s-W" . puni-splice)
-         ("s-r" . puni-raise)))
+         ("s-r" . puni-raise)
+         ("s-u" . backward-up-list)
+         ("s-d" . down-list)))
 
 (use-package parinfer-rust-mode
   :disabled
