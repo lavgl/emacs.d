@@ -90,6 +90,10 @@
 
 (use-package iedit)
 
+(use-package wgrep
+  :custom
+  (wgrep-auto-save-buffer t))
+
 (use-package super-save
   :config
   (super-save-mode))
