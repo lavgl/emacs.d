@@ -34,7 +34,6 @@
 
 
 (use-package benchmark-init
-  :disabled
   :config
   ;; To disable collection of benchmark data after init is done.
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
@@ -230,12 +229,14 @@
 
 (use-package consult
   :bind (("C-." . consult-buffer)
-         ("C-c C-/" . consult-ripgrep)))
+         ("C-c C-/" . consult-ripgrep)
+         ("M-g i" . consult-imenu)
+         ("M-g M-g" . consult-goto-line)
+         ("M-g g" . consult-goto-line)))
 
 (use-package embark-consult
   :defer t)
 
-;; TODO: bind 'recentf-open-fles to the key?
 (use-package recentf
   :init
   (recentf-mode))
@@ -314,7 +315,8 @@ Handy for quick init.el access."
 
 (use-package emacs
   :bind (("C-c f i" . vh/find-init-file)
-         ("C-x k" . kill-this-buffer)))
+         ("C-x k" . kill-this-buffer)
+         ("C-x C-b" . ibuffer)))
 
 ;; git
 
@@ -349,18 +351,6 @@ Handy for quick init.el access."
   :init (global-highlight-parentheses-mode))
 
 
-(use-package smartparens
-  :disabled
-  :hook (prog-mode . turn-on-smartparens-strict-mode)
-  :config
-  (require 'smartparens-config)
-  :bind (("s-[" . sp-backward-slurp-sexp)
-         ("s-]" . sp-slurp-hybrid-sexp)
-         ("s-{" . sp-backward-barf-sexp)
-         ("s-}" . sp-forward-barf-sexp)
-         ("s-f" . sp-forward-sexp)
-         ("s-b" . sp-backward-sexp)))
-
 (use-package puni
   :hook prog-mode
   :config
@@ -382,11 +372,6 @@ Handy for quick init.el access."
          ("s-u" . backward-up-list)
          ("s-d" . down-list)))
 
-(use-package parinfer-rust-mode
-  :disabled
-  :hook (emacs-lisp-mode
-         clojure-mode))
-
 ;; makes parentheses less visible in Lisp code by dimming them
 (use-package paren-face
   :diminish
@@ -394,8 +379,9 @@ Handy for quick init.el access."
   (global-paren-face-mode))
 
 
+;; NOTE: disabled, because I'm trying to use flymake via eglot
 (use-package flycheck
-  :diminish
+  :disabled
   :defer t
   :init (global-flycheck-mode))
 
@@ -428,8 +414,10 @@ Handy for quick init.el access."
 (use-package cider
   :defer t)
 
-(use-package flycheck-clj-kondo
-  :after (flycheck clojure-mode))
+(use-package eglot
+  :hook (clojure-mode . eglot-ensure)
+  :custom
+  (eglot-ignored-server-capabilities '(:hoverProvider)))
 
 (use-package kaocha-runner
   :bind (:map clojure-mode-map
