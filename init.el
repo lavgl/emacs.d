@@ -155,6 +155,7 @@
                               help-mode
                               helpful-mode
                               cider-repl-mode
+                              "\\*kaocha-output\\*"
                               shell-mode
                               eshell-mode))
   :init
@@ -412,12 +413,19 @@ Handy for quick init.el access."
   (put-clojure-indent 'recur 0))
 
 (use-package cider
-  :defer t)
+  :defer t
+  :bind (:map cider-mode-map
+              ("C-c f f" . cider-format-defun)
+              ("C-c f b" . cider-format-buffer)))
 
 (use-package eglot
   :hook (clojure-mode . eglot-ensure)
   :custom
-  (eglot-ignored-server-capabilities '(:hoverProvider)))
+  ;; hoverProvider disabled, because I don't like
+  ;; how huge minibuffer expantion could be because of eldoc
+  (eglot-ignored-server-capabilities '(:hoverProvider))
+  :bind (:map clojure-mode-map
+              ("C-c C-r r" . eglot-rename)))
 
 (use-package kaocha-runner
   :bind (:map clojure-mode-map
