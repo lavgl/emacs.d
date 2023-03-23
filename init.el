@@ -97,6 +97,10 @@
   :config
   (super-save-mode))
 
+(use-package editorconfig
+  :config
+  (editorconfig-mode))
+
 ;; window management
 
 ;; fullscreen frame on startup
@@ -446,3 +450,20 @@ Handy for quick init.el access."
 
 (use-package highlight-indentation
   :hook (yaml-mode . highlight-indentation-current-column-mode))
+
+;; copilot
+
+;; https://github.com/rksm/copilot-emacsd/blob/master/init.el#L72
+(defun rk/copilot-complete-if-active (next-func n)
+  (let ((completed (when copilot-mode (copilot-accept-completion))))
+    (unless completed (funcall next-func n))))
+
+
+(use-package copilot
+  :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
+  :hook prog-mode
+  :bind (:map copilot-mode-map
+              ("M-n" . copilot-next-completion)
+              ("M-p" . copilot-previous-completion))
+  :config
+  (advice-add 'indent-for-tab-command :around #'rk/copilot-complete-if-active))
