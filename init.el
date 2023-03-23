@@ -462,8 +462,10 @@ Handy for quick init.el access."
 (use-package copilot
   :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :hook prog-mode
-  :bind (:map copilot-mode-map
+  :bind (:map copilot-completion-map
               ("M-n" . copilot-next-completion)
-              ("M-p" . copilot-previous-completion))
+              ("M-p" . copilot-previous-completion)
+              ("M-w" . copilot-accept-completion-by-word)
+              ("M-l" . copilot-accept-completion-by-line))
   :config
   (advice-add 'indent-for-tab-command :around #'rk/copilot-complete-if-active))
