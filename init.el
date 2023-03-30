@@ -159,6 +159,7 @@
                               help-mode
                               helpful-mode
                               cider-repl-mode
+                              ;; "\\*cider-"
                               "\\*kaocha-output\\*"
                               shell-mode
                               eshell-mode))
@@ -350,12 +351,6 @@ Handy for quick init.el access."
               ("C-c C-c" . eval-defun)))
 
 
-;; paints parentheses surrounding the cursor in shades of red
-(use-package highlight-parentheses
-  :diminish
-  :init (global-highlight-parentheses-mode))
-
-
 (use-package puni
   :hook prog-mode
   :config
@@ -379,9 +374,22 @@ Handy for quick init.el access."
 
 ;; makes parentheses less visible in Lisp code by dimming them
 (use-package paren-face
+  :disabled
   :diminish
   :config
   (global-paren-face-mode))
+
+
+;; paints parentheses surrounding the cursor in shades of red
+(use-package highlight-parentheses
+  :disabled
+  :diminish
+  :init (global-highlight-parentheses-mode))
+
+
+(use-package rainbow-delimiters
+  :diminish
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 
 ;; NOTE: disabled, because I'm trying to use flymake via eglot
@@ -397,6 +405,7 @@ Handy for quick init.el access."
   :custom
   (clojure-indent-style :always-indent)
   (clojure-align-forms-automatically t)
+  (clojure-toplevel-inside-comment-form t)
   :config
   (put-clojure-indent '= 0)
   (put-clojure-indent 'not= 0)
@@ -469,3 +478,12 @@ Handy for quick init.el access."
               ("M-l" . copilot-accept-completion-by-line))
   :config
   (advice-add 'indent-for-tab-command :around #'rk/copilot-complete-if-active))
+
+(use-package gptel
+  :disabled
+  :straight (:host github :repo "karthink/gptel")
+  :custom
+  (gptel-api-key (lambda ()
+                   (with-temp-buffer
+                     (insert-file-contents "~/.gpt-secret")
+                     (buffer-string)))))
