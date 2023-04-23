@@ -367,7 +367,7 @@ Handy for quick init.el access."
          ("s-}" . puni-barf-forward)
          ("s-[" . puni-slurp-backward)
          ("s-{" . puni-barf-backward)
-         ("s-W" . puni-splice)
+         ("s-w" . puni-splice)
          ("s-r" . puni-raise)
          ("s-u" . backward-up-list)
          ("s-d" . down-list)))
