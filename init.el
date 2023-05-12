@@ -284,7 +284,13 @@
 
 ;; search & navigation
 
+(use-package emacs
+  :config
+  (setq-default isearch-lazy-count t)
+  (setq search-whitespace-regexp ".*?"))
+
 (use-package ctrlf
+  :disabled
   :defer t
   :init
   (ctrlf-mode)
