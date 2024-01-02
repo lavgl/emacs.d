@@ -64,8 +64,6 @@
 (blink-cursor-mode -1)
 (global-auto-revert-mode)
 
-(add-hook 'before-save-hook 'whitespace-cleanup)
-
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (set-face-attribute 'default nil :font "Source Code Pro" :height 160)
@@ -358,7 +356,8 @@ Handy for quick init.el access."
 
 
 (use-package puni
-  :hook prog-mode
+  :init
+  (puni-global-mode)
   :config
   (electric-pair-mode)
   :bind (:map puni-mode-map
