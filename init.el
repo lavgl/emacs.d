@@ -458,8 +458,10 @@ Handy for quick init.el access."
 (use-package yaml-mode)
 
 (use-package ansible
+  :disabled
   :hook (yaml-mode . ansible))
 (use-package ansible-doc
+  :disabled
   :hook (yaml-mode . ansible-doc-mode))
 
 (use-package highlight-indentation
