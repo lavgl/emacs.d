@@ -430,11 +430,13 @@ Handy for quick init.el access."
   (put-clojure-indent 'or* 0)
   (put-clojure-indent 'recur 0))
 
+
 (use-package cider
   :defer t
   :bind (:map cider-mode-map
               ("C-c f f" . cider-format-defun)
               ("C-c f b" . cider-format-buffer)))
+
 
 (use-package eglot
   :hook (clojure-mode . eglot-ensure)
@@ -444,6 +446,7 @@ Handy for quick init.el access."
   (eglot-ignored-server-capabilities '(:hoverProvider))
   :bind (:map clojure-mode-map
               ("C-c C-r r" . eglot-rename)))
+
 
 (use-package kaocha-runner
   :bind (:map clojure-mode-map
@@ -457,15 +460,20 @@ Handy for quick init.el access."
 
 (use-package yaml-mode)
 
+
+(use-package highlight-indentation
+  :hook (yaml-mode . highlight-indentation-current-column-mode))
+
+
 (use-package ansible
   :disabled
   :hook (yaml-mode . ansible))
+
+
 (use-package ansible-doc
   :disabled
   :hook (yaml-mode . ansible-doc-mode))
 
-(use-package highlight-indentation
-  :hook (yaml-mode . highlight-indentation-current-column-mode))
 
 ;; copilot
 
@@ -476,6 +484,7 @@ Handy for quick init.el access."
 
 
 (use-package copilot
+  :disabled
   :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
   :hook prog-mode
   :bind (:map copilot-completion-map
@@ -485,12 +494,3 @@ Handy for quick init.el access."
               ("M-l" . copilot-accept-completion-by-line))
   :config
   (advice-add 'indent-for-tab-command :around #'rk/copilot-complete-if-active))
-
-(use-package gptel
-  :disabled
-  :straight (:host github :repo "karthink/gptel")
-  :custom
-  (gptel-api-key (lambda ()
-                   (with-temp-buffer
-                     (insert-file-contents "~/.gpt-secret")
-                     (buffer-string)))))
