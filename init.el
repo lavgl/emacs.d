@@ -285,7 +285,9 @@
 (use-package emacs
   :config
   (setq-default isearch-lazy-count t)
-  (setq search-whitespace-regexp ".*?"))
+  (setq search-whitespace-regexp ".*?")
+  ;; NOTE: enables pasting to isearch buffer via CMD-v
+  (define-key isearch-mode-map (kbd "s-v") 'isearch-yank-kill))
 
 (use-package ctrlf
   :disabled
@@ -439,12 +441,12 @@ Handy for quick init.el access."
 
 
 (use-package eglot
-  :hook (clojure-mode . eglot-ensure)
+  :hook ((clojure-mode . eglot-ensure))
   :custom
   ;; hoverProvider disabled, because I don't like
   ;; how huge minibuffer expantion could be because of eldoc
   (eglot-ignored-server-capabilities '(:hoverProvider))
-  :bind (:map clojure-mode-map
+  :bind (:map eglot-mode-map
               ("C-c C-r r" . eglot-rename)))
 
 
