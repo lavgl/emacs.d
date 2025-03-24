@@ -483,6 +483,10 @@ Handy for quick init.el access."
   :hook (yaml-mode . ansible-doc-mode))
 
 
+(use-package uv-mode
+  :hook (python-mode . uv-mode-auto-activate-hook))
+
+
 ;; copilot
 
 ;; https://github.com/rksm/copilot-emacsd/blob/master/init.el#L72
