@@ -508,6 +508,17 @@ Handy for quick init.el access."
   (advice-add 'indent-for-tab-command :around #'rk/copilot-complete-if-active))
 
 
+(use-package gptel
+  :config
+  ;; OpenRouter offers an OpenAI compatible API
+  (gptel-make-openai "open-router"
+    :host "openrouter.ai"
+    :endpoint "/api/v1/chat/completions"
+    :stream t
+    :key (getenv "OPENROUTER_API_KEY")
+    :models '(deepseek/deepseek-chat-v3-0324:free)))
+
+
 (use-package aidermacs
   :bind (("C-c a" . aidermacs-transient-menu))
   ;; :config

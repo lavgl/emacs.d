@@ -14,3 +14,4 @@ etc/*
 flycheck_init.el
 parinfer-rust/
 *.elc
+.aider*
