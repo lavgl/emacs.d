@@ -443,7 +443,9 @@ Handy for quick init.el access."
   :defer t
   :bind (:map cider-mode-map
               ("C-c f f" . cider-format-defun)
-              ("C-c f b" . cider-format-buffer)))
+              ("C-c f b" . cider-format-buffer))
+  :custom
+  (nrepl-use-ssh-fallback-for-remote-hosts t))
 
 
 (use-package eglot
