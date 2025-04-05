@@ -146,6 +146,9 @@
          ("M-4" . 'winum-select-window-4)
          ("M-o" . other-window)))
 
+(use-package transpose-frame
+  :bind (("C-x C-3" . transpose-frame)))
+
 ;; TODO: add *xref* as a popup? after checking the video
 ;; and *Warnings*
 ;; and *Backtrace*
