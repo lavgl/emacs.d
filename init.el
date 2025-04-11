@@ -361,7 +361,6 @@ Handy for quick init.el access."
 
 (use-package emacs
   :bind (:map emacs-lisp-mode-map
-              ("C-<return>" . eval-defun)
               ;; mimicking cider here
               ("C-c C-c" . eval-defun)))
 
@@ -490,6 +489,19 @@ Handy for quick init.el access."
 
 (use-package uv-mode
   :hook (python-mode . uv-mode-auto-activate-hook))
+
+
+(use-package css-mode
+  :custom
+  (css-indent-offset 2))
+
+
+(use-package js2-mode
+  :ensure t
+  :mode "\\.js\\'"
+  :config
+  (setq js2-basic-offset 2)
+  (setq js2-highlight-level 3))
 
 
 ;; copilot

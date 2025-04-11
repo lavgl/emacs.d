@@ -15,3 +15,4 @@ flycheck_init.el
 parinfer-rust/
 *.elc
 .aider*
+ielm-history.eld
