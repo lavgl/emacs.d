@@ -298,14 +298,6 @@
   ;; NOTE: enables pasting to isearch buffer via CMD-v
   (define-key isearch-mode-map (kbd "s-v") 'isearch-yank-kill))
 
-(use-package ctrlf
-  :disabled
-  :defer t
-  :init
-  (ctrlf-mode)
-  :custom
-  (ctrlf-default-search-style 'fuzzy))
-
 
 ;; TODO: load lazily?
 ;; but then I probably shouldn't activate mode on init :)
@@ -343,6 +335,8 @@ Handy for quick init.el access."
 
 (use-package magit
   :defer t)
+
+(use-package git-timemachine)
 
 ;; misc
 
