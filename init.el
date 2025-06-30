@@ -338,6 +338,10 @@ Handy for quick init.el access."
 
 (use-package git-timemachine)
 
+(use-package diff-hl
+  :config
+  (global-diff-hl-mode))
+
 ;; misc
 
 (use-package hl-todo
