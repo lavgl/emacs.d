@@ -502,6 +502,11 @@ Handy for quick init.el access."
   (setq js2-highlight-level 3))
 
 
+(use-package apheleia
+  :config
+  (apheleia-global-mode +1))
+
+
 ;; copilot
 
 ;; https://github.com/rksm/copilot-emacsd/blob/master/init.el#L72
