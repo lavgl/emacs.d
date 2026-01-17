@@ -505,6 +505,13 @@ Handy for quick init.el access."
   (setq js2-highlight-level 3))
 
 
+(use-package go-mode
+  :hook ((go-mode . eglot-ensure)
+         (go-mode . subword-mode))
+  :config
+  (setf (alist-get 'go-mode apheleia-mode-alist) 'goimports)
+  (setf (alist-get 'goimports apheleia-formatters) '("goimports")))
+
 (use-package apheleia
   :config
   (apheleia-global-mode +1))
