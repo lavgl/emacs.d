@@ -350,10 +350,16 @@ Handy for quick init.el access."
 
 (use-package crux
   :bind ((("C-a" . crux-move-beginning-of-line))))
-         ;; (("C-<tab>" . crux-switch-to-previous-buffer))))
 
 (use-package expand-region
   :bind (("C-=" . er/expand-region)))
+
+
+;; remove trailing whitespaces on modified lines
+(use-package ws-butler
+  :ensure t
+  :config
+  (ws-butler-global-mode))  
 
 ;; elisp support
 
@@ -369,21 +375,21 @@ Handy for quick init.el access."
   :config
   (electric-pair-mode)
   :bind (:map puni-mode-map
-         ("C-<backspace>" . puni-backward-kill-word)
-         ("s-b" . puni-backward-sexp)
-         ("s-f" . puni-forward-sexp)
-         ("s-a" . puni-beginning-of-sexp)
-         ("s-e" . puni-end-of-sexp)
-         ("s-n" . puni-syntactic-forward-punct)
-         ("s-p" . puni-syntactic-backward-punct)
-         ("s-]" . puni-slurp-forward)
-         ("s-}" . puni-barf-forward)
-         ("s-[" . puni-slurp-backward)
-         ("s-{" . puni-barf-backward)
-         ("s-w" . puni-splice)
-         ("s-r" . puni-raise)
-         ("s-u" . backward-up-list)
-         ("s-d" . down-list)))
+              ("C-<backspace>" . puni-backward-kill-word)
+              ("s-b" . puni-backward-sexp)
+              ("s-f" . puni-forward-sexp)
+              ("s-a" . puni-beginning-of-sexp)
+              ("s-e" . puni-end-of-sexp)
+              ("s-n" . puni-syntactic-forward-punct)
+              ("s-p" . puni-syntactic-backward-punct)
+              ("s-]" . puni-slurp-forward)
+              ("s-}" . puni-barf-forward)
+              ("s-[" . puni-slurp-backward)
+              ("s-{" . puni-barf-backward)
+              ("s-w" . puni-splice)
+              ("s-r" . puni-raise)
+              ("s-u" . backward-up-list)
+              ("s-d" . down-list)))
 
 ;; makes parentheses less visible in Lisp code by dimming them
 (use-package paren-face
@@ -405,11 +411,8 @@ Handy for quick init.el access."
   :hook (prog-mode . rainbow-delimiters-mode))
 
 
-;; NOTE: disabled, because I'm trying to use flymake via eglot
 (use-package flycheck
-  :disabled
-  :defer t
-  :init (global-flycheck-mode))
+  :ensure t)  
 
 ;; clojure
 
@@ -505,48 +508,3 @@ Handy for quick init.el access."
 (use-package apheleia
   :config
   (apheleia-global-mode +1))
-
-
-;; copilot
-
-;; https://github.com/rksm/copilot-emacsd/blob/master/init.el#L72
-(defun rk/copilot-complete-if-active (next-func n)
-  (let ((completed (when copilot-mode (copilot-accept-completion))))
-    (unless completed (funcall next-func n))))
-
-
-(use-package copilot
-  :disabled
-  :straight (:host github :repo "zerolfx/copilot.el" :files ("dist" "*.el"))
-  :hook prog-mode
-  :bind (:map copilot-completion-map
-              ("M-n" . copilot-next-completion)
-              ("M-p" . copilot-previous-completion)
-              ("M-w" . copilot-accept-completion-by-word)
-              ("M-l" . copilot-accept-completion-by-line))
-  :config
-  (advice-add 'indent-for-tab-command :around #'rk/copilot-complete-if-active))
-
-
-(use-package gptel
-  :config
-  ;; OpenRouter offers an OpenAI compatible API
-  (gptel-make-openai "open-router"
-    :host "openrouter.ai"
-    :endpoint "/api/v1/chat/completions"
-    :stream t
-    :key (getenv "OPENROUTER_API_KEY")
-    :models '(deepseek/deepseek-chat-v3-0324:free)))
-
-
-(use-package aidermacs
-  :bind (("C-c a" . aidermacs-transient-menu))
-  ;; :config
-  ; Set API_KEY in .bashrc, that will automatically picked up by aider or in elisp
-  ;; (setenv "ANTHROPIC_API_KEY" "sk-...")
-  ; defun my-get-openrouter-api-key yourself elsewhere for security reasons
-  ;; (setenv "OPENROUTER_API_KEY" (my-get-openrouter-api-key))
-  :custom
-  ; See the Configuration section below
-  (aidermacs-use-architect-mode t)
-  (aidermacs-default-model "sonnet"))
