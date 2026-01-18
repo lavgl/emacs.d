@@ -412,7 +412,15 @@ Handy for quick init.el access."
 
 
 (use-package flycheck
-  :ensure t)  
+  :ensure t
+  :hook (prog-mode . flycheck-mode))
+
+(use-package flycheck-eglot
+  :ensure t
+  :after (flycheck eglot)
+  :config
+  (global-flycheck-eglot-mode 1))
+
 
 ;; clojure
 
