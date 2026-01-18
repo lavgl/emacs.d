@@ -517,7 +517,8 @@ Handy for quick init.el access."
   :hook ((go-mode . eglot-ensure)
          (go-mode . subword-mode))
   :config
-  (setf (alist-get 'go-mode apheleia-mode-alist) 'goimports))
+  (setf (alist-get 'go-mode apheleia-mode-alist) 'goimports)
+  (setf (alist-get 'goimports apheleia-formatters) '("goimports")))
 
 (use-package apheleia
   :config
