@@ -351,8 +351,9 @@ Handy for quick init.el access."
 (use-package crux
   :bind ((("C-a" . crux-move-beginning-of-line))))
 
-(use-package expand-region
-  :bind (("C-=" . er/expand-region)))
+(use-package expreg
+  :bind (("C-=" . expreg-expand)
+         ("C--" . expreg-contract)))
 
 
 ;; remove trailing whitespaces on modified lines
