@@ -416,15 +416,11 @@ Handy for quick init.el access."
   :hook (prog-mode . rainbow-delimiters-mode))
 
 
-(use-package flycheck
-  :ensure t
-  :hook (prog-mode . flycheck-mode))
-
-(use-package flycheck-eglot
-  :ensure t
-  :after (flycheck eglot)
-  :config
-  (global-flycheck-eglot-mode 1))
+(use-package flymake
+  :hook (prog-mode . flymake-mode)
+  :bind (:map flymake-mode-map
+              ("M-n" . flymake-goto-next-error)
+              ("M-p" . flymake-goto-prev-error)))
 
 
 ;; clojure
