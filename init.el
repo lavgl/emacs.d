@@ -302,15 +302,16 @@
   (define-key isearch-mode-map (kbd "s-v") 'isearch-yank-kill))
 
 
-;; TODO: load lazily?
-;; but then I probably shouldn't activate mode on init :)
-(use-package projectile
-  :diminish
-  :defer t
-  :init
-  (projectile-mode)
-  :bind (:map projectile-mode-map
-              ("C-c p" . projectile-command-map)))
+(use-package emacs
+  :custom
+  (project-vc-extra-root-markers '("deps.edn"
+                                   "Makefile"
+                                   ".projectile"))
+  :bind-keymap ("C-c p" . project-prefix-map)
+  :bind ((:map project-prefix-map
+               ("b" . consult-project-buffer)
+               ("f" . project-find-file)
+               ("g" . consult-ripgrep))))
 
 (use-package dumb-jump
   :defer t
