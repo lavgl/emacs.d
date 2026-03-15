@@ -1,3 +1,5 @@
+;;; init.el --- Emacs configuration -*- lexical-binding: t; -*-
+
 ;; package management setup
 
 (defvar bootstrap-version)
