@@ -95,6 +95,7 @@
 (use-package iedit)
 
 (use-package wgrep
+  :defer t
   :custom
   (wgrep-auto-save-buffer t))
 
@@ -338,7 +339,8 @@ Handy for quick init.el access."
 (use-package magit
   :defer t)
 
-(use-package git-timemachine)
+(use-package git-timemachine
+  :defer t)
 
 (use-package diff-hl
   :config
@@ -427,58 +429,54 @@ Handy for quick init.el access."
 
 ;; clojure
 
-(use-package clojure-mode
-  :commands put-clojure-indent
+(use-package clojure-ts-mode
+  :defer t
   :custom
-  (clojure-indent-style :always-indent)
-  (clojure-align-forms-automatically t)
-  (clojure-toplevel-inside-comment-form t)
-  :config
-  (put-clojure-indent '= 0)
-  (put-clojure-indent 'not= 0)
-  (put-clojure-indent '+ 0)
-  (put-clojure-indent '- 0)
-  (put-clojure-indent '* 0)
-  (put-clojure-indent '/ 0)
-  (put-clojure-indent '> 0)
-  (put-clojure-indent '< 0)
-  (put-clojure-indent '>= 0)
-  (put-clojure-indent '<= 0)
-  (put-clojure-indent '->  0)
-  (put-clojure-indent '->> 0)
-  (put-clojure-indent 'and 0)
-  (put-clojure-indent 'or  0)
-  (put-clojure-indent 'and* 0)
-  (put-clojure-indent 'or* 0)
-  (put-clojure-indent 'recur 0))
+  (clojure-ts-indent-style 'fixed)
+  :init
+  (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode))
+  (add-to-list 'major-mode-remap-alist '(clojurescript-mode . clojure-ts-clojurescript-mode))
+  (add-to-list 'major-mode-remap-alist '(clojurec-mode . clojure-ts-clojurec-mode))
+  (add-to-list 'major-mode-remap-alist '(edn-mode . clojure-ts-clojurec-mode)))
+
+;; (use-package clojure-mode
+;;   :disabled
+;;   :commands put-clojure-indent
+;;   :custom
+;;   (clojure-indent-style :always-indent)
+;;   (clojure-indent-keyword-style :always-indent)
+;;   (clojure-enable-indent-specs nil)
+;;   (clojure-toplevel-inside-comment-form t))
 
 
 (use-package cider
   :defer t
-  :bind (:map cider-mode-map
-              ("C-c f f" . cider-format-defun)
-              ("C-c f b" . cider-format-buffer))
   :custom
-  (nrepl-use-ssh-fallback-for-remote-hosts t))
+  (nrepl-use-ssh-fallback-for-remote-hosts t)
+  :config
+  (define-key cider-mode-map (kbd "C-c f f") #'cider-format-defun)
+  (define-key cider-mode-map (kbd "C-c f b") #'cider-format-buffer))
 
 
 (use-package eglot
-  :hook ((clojure-mode . eglot-ensure))
+  :hook ((clojure-ts-mode . eglot-ensure))
   :custom
   ;; hoverProvider disabled, because I don't like
   ;; how huge minibuffer expantion could be because of eldoc
-  (eglot-ignored-server-capabilities '(:hoverProvider))
+  (eglot-ignored-server-capabilities '(:hoverProvider
+                                       :documentHighlightProvider
+                                       :codeActionProvider
+                                       :semanticTokensProvider))
   :bind (:map eglot-mode-map
               ("C-c C-r r" . eglot-rename)))
 
 
-(use-package kaocha-runner
-  :bind (:map clojure-mode-map
-              ("C-c k t" . kaocha-runner-run-test-at-point)
-              ("C-c k n" . kaocha-runner-run-tests)
-              ("C-c k a" . kaocha-runner-run-all-tests)
-              ("C-c k w" . kaocha-runner-show-warnings)
-              ("C-c k h" . kaocha-runner-hide-windows)))
+(with-eval-after-load 'clojure-ts-mode
+  (define-key clojure-ts-mode-map (kbd "C-c k t") #'kaocha-runner-run-test-at-point)
+  (define-key clojure-ts-mode-map (kbd "C-c k n") #'kaocha-runner-run-tests)
+  (define-key clojure-ts-mode-map (kbd "C-c k a") #'kaocha-runner-run-all-tests)
+  (define-key clojure-ts-mode-map (kbd "C-c k w") #'kaocha-runner-show-warnings)
+  (define-key clojure-ts-mode-map (kbd "C-c k h") #'kaocha-runner-hide-windows))
 
 ;; init yaml / ansible support
 
@@ -504,6 +502,7 @@ Handy for quick init.el access."
 
 
 (use-package css-mode
+  :defer t
   :custom
   (css-indent-offset 2))
 
