@@ -512,11 +512,15 @@ Handy for quick init.el access."
   (setq js2-highlight-level 3))
 
 
-(use-package go-mode
-  :hook ((go-mode . eglot-ensure)
-         (go-mode . subword-mode))
+(use-package go-ts-mode
+  :mode (("\\.go\\'" . go-ts-mode)
+         ("go\\.mod\\'" . go-mod-ts-mode))
+  :hook ((go-ts-mode . eglot-ensure)
+         (go-ts-mode . subword-mode))
+  :custom
+  (go-ts-mode-indent-offset 4)
   :config
-  (setf (alist-get 'go-mode apheleia-mode-alist) 'goimports)
+  (setf (alist-get 'go-ts-mode apheleia-mode-alist) 'goimports)
   (setf (alist-get 'goimports apheleia-formatters) '("goimports")))
 
 (use-package apheleia
