@@ -432,6 +432,7 @@ Handy for quick init.el access."
   :defer t
   :custom
   (clojure-ts-indent-style 'fixed)
+  (clojure-ts-toplevel-inside-comment-form t)
   :init
   (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode))
   (add-to-list 'major-mode-remap-alist '(clojurescript-mode . clojure-ts-clojurescript-mode))
