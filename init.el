@@ -307,11 +307,13 @@
   (project-vc-extra-root-markers '("deps.edn"
                                    "Makefile"
                                    ".projectile"))
+  ;; NOTE: g
+  (project-switch-use-entire-map t)
   :bind-keymap ("C-c p" . project-prefix-map)
   :bind ((:map project-prefix-map
                ("b" . consult-project-buffer)
                ("f" . project-find-file)
-               ("g" . consult-ripgrep))))
+               ("/" . consult-ripgrep))))
 
 (use-package dumb-jump
   :defer t
