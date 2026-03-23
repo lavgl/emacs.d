@@ -20,12 +20,12 @@
 
 
 (setq straight-use-package-by-default t)
-(setq straight-built-in-pseudo-packages '(emacs project))
+(setq straight-built-in-pseudo-packages '(emacs project use-package
+                                                which-key editorconfig eglot
+                                                flymake recentf savehist css-mode))
 
-(straight-use-package 'use-package)
-
-(setq use-package-compute-statistics t
-      use-package-verbose t)
+;; (setq use-package-compute-statistics t
+;;       use-package-verbose t)
 
 ;; no-littering setup
 ;; trying to not pollute my .emacs.d
@@ -41,6 +41,7 @@
 
 
 (use-package benchmark-init
+  :disabled
   :config
   ;; To disable collection of benchmark data after init is done.
   (add-hook 'after-init-hook 'benchmark-init/deactivate))
