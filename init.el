@@ -529,4 +529,10 @@ Handy for quick init.el access."
 
 (use-package apheleia
   :config
+  (setf (alist-get 'standard-clojure apheleia-formatters)
+        '("standard-clj" "fix" "-"))
+  (setf (alist-get 'clojure-ts-mode apheleia-mode-alist) 'standard-clojure)
+  (setf (alist-get 'clojure-ts-clojurec-mode apheleia-mode-alist) 'standard-clojure)
+  (setf (alist-get 'clojure-ts-clojurescript-mode apheleia-mode-alist) 'standard-clojure)
+
   (apheleia-global-mode +1))
