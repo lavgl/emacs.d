@@ -432,13 +432,35 @@ Handy for quick init.el access."
 (use-package clojure-ts-mode
   :defer t
   :custom
-  (clojure-ts-indent-style 'fixed)
+  (clojure-ts-align-forms-automatically t)
   (clojure-ts-toplevel-inside-comment-form t)
   :init
   (add-to-list 'major-mode-remap-alist '(clojure-mode . clojure-ts-mode))
   (add-to-list 'major-mode-remap-alist '(clojurescript-mode . clojure-ts-clojurescript-mode))
   (add-to-list 'major-mode-remap-alist '(clojurec-mode . clojure-ts-clojurec-mode))
-  (add-to-list 'major-mode-remap-alist '(edn-mode . clojure-ts-clojurec-mode)))
+  (add-to-list 'major-mode-remap-alist '(edn-mode . clojure-ts-clojurec-mode))
+  :config
+  (setopt clojure-ts-semantic-indent-rules
+          '(("is"    . ((:block 0)))
+
+            ("="     . ((:block 0)))
+            ("not="  . ((:block 0)))
+            ("+"     . ((:block 0)))
+            ("-"     . ((:block 0)))
+            ("*"     . ((:block 0)))
+            ("/"     . ((:block 0)))
+            (">"     . ((:block 0)))
+            ("<"     . ((:block 0)))
+            (">="    . ((:block 0)))
+            ("<="    . ((:block 0)))
+
+            ("->"    . ((:block 0)))
+            ("->>"   . ((:block 0)))
+            ("and"   . ((:block 0)))
+            ("or"    . ((:block 0)))
+            ("and*"  . ((:block 0)))
+            ("or*"   . ((:block 0)))
+            ("recur" . ((:block 0))))))
 
 ;; (use-package clojure-mode
 ;;   :disabled
