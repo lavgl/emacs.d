@@ -341,7 +341,9 @@ Handy for quick init.el access."
 ;; git
 
 (use-package magit
-  :defer t)
+  :defer t
+  :custom
+  (magit-auto-revert-mode nil))
 
 (use-package git-timemachine
   :defer t)
