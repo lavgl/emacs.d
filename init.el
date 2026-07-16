@@ -70,7 +70,7 @@
 (tooltip-mode -1)
 (scroll-bar-mode -1)
 (blink-cursor-mode -1)
-(global-auto-revert-mode)
+;; (global-auto-revert-mode)
 
 (defalias 'yes-or-no-p 'y-or-n-p)
 
@@ -100,9 +100,9 @@
   :custom
   (wgrep-auto-save-buffer t))
 
-(use-package super-save
-  :config
-  (super-save-mode))
+;; (use-package super-save
+;;   :config
+;;   (super-save-mode))
 
 (use-package editorconfig
   :config
