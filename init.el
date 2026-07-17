@@ -292,6 +292,12 @@
   (corfu-popupinfo-mode)
   (corfu-history-mode))
 
+;; https://emacsredux.com/blog/2026/07/13/cape-corfus-best-friend/
+(use-package cape
+  :ensure t
+  :init
+  (add-hook 'completion-at-point-functions #'cape-dabbrev)
+  (add-hook 'completion-at-point-functions #'cape-file))
 
 ;; search & navigation
 
